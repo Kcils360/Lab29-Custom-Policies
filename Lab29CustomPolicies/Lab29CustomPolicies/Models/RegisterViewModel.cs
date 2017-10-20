@@ -38,5 +38,6 @@ namespace Lab29CustomPolicies.Models
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The passwords do not match!!")]
         public string ConfirmPassword { get; set; }
+
     }
 }

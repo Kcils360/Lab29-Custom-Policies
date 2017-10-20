@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Lab29CustomPolicies.Models;
+using Lab29CustomPolicies.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lab29CustomPolicies
 {
@@ -27,11 +31,30 @@ namespace Lab29CustomPolicies
         {
             services.AddMvc();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie("MyCookieLogin", options =>
+                    options.AccessDeniedPath = new PathString("/Account/Forbidden/"));
+
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin Only", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("MinimumAge", policy => policy.Requirements.Add(new MinimumAgeRequirment()));
+            }
+            );
+
+            services.AddSingleton<IAuthorizationHandler, Is21>();
+
             services.AddDbContext<Lab29CustomPoliciesContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Lab29CustomPoliciesContext")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("Lab29CustomPoliciesContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("Lab29CustomPoliciesContext")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
+
 
         }
 
