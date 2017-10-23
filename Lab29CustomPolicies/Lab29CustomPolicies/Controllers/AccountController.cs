@@ -37,7 +37,9 @@ namespace Lab29CustomPolicies.Controllers
                 var result = await _userManager.CreateAsync(user, rvm.Password);
 
                 if (result.Succeeded)
-                {
+                { 
+                    Claim dateOfBirth = new Claim(ClaimTypes.DateOfBirth, user.Birthday.Date.ToString(), ClaimValueTypes.Date);
+
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -83,11 +85,28 @@ namespace Lab29CustomPolicies.Controllers
             //ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = rvm.UserName, Email = rvm.Email };
+                var user = new ApplicationUser { UserName = rvm.UserName, Email = rvm.Email, Birthday = rvm.Birthday };
                 var result = await _userManager.CreateAsync(user, rvm.Password);
 
                 if (result.Succeeded)
                 {
+                    //Create a list where my claims will be added to
+                    List<Claim> myClaims = new List<Claim>();
+
+                    //Claim for the user's roll
+                    Claim makeAdmin = new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String);
+                    myClaims.Add(makeAdmin);
+
+                    Claim dateOfBirth = new Claim(ClaimTypes.DateOfBirth, user.Birthday.Date.ToString(), ClaimValueTypes.Date);
+
+                    myClaims.Add(dateOfBirth);
+
+                    var userIdentity = new ClaimsIdentity("Registration");
+                    userIdentity.AddClaims(myClaims);
+
+                    var userPrinciple = new ClaimsPrincipal(userIdentity);
+
+                    User.AddIdentity(userIdentity);
                     var addRole = await _userManager.AddClaimAsync(user, (new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String)));
                     if (addRole.Succeeded)
                     {

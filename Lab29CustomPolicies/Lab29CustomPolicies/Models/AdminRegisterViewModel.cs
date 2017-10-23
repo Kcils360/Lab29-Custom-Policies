@@ -14,6 +14,8 @@ namespace Lab29CustomPolicies.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime Birthday { get; set; }
 
         [Required]
         [Display(Name = "UserName")]

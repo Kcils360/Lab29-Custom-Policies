@@ -44,6 +44,7 @@ namespace Lab29CustomPolicies
             );
 
             services.AddSingleton<IAuthorizationHandler, Is21>();
+            //services.AddSingleton<IAuthorizationHandler, IsContributer>();
 
             services.AddDbContext<Lab29CustomPoliciesContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Lab29CustomPoliciesContext")));

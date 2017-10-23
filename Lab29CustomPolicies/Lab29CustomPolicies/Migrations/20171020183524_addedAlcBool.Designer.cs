@@ -11,9 +11,10 @@ using System;
 namespace Lab29CustomPolicies.Migrations
 {
     [DbContext(typeof(Lab29CustomPoliciesContext))]
-    partial class Lab29CustomPoliciesContextModelSnapshot : ModelSnapshot
+    [Migration("20171020183524_addedAlcBool")]
+    partial class addedAlcBool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,8 +16,10 @@ namespace Lab29CustomPolicies.Models
 
         public string Ingredients { get; set; }
 
+        [Display(Name = "Contains Alcohol")]
+        public bool ContainsAlcohol { get; set; }
+
         public string Directions { get; set; }
 
-        public bool IsPublished { get; set; }
     }
 }
