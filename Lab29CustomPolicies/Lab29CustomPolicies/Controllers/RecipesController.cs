@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab29CustomPolicies.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lab29CustomPolicies.Controllers
 {
     public class RecipesController : Controller
     {
+        
         private readonly Lab29CustomPoliciesContext _context;
 
         public RecipesController(Lab29CustomPoliciesContext context)

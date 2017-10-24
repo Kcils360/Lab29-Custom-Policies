@@ -18,6 +18,7 @@
             <span>Hello @User.Identities.First(u => u.IsAuthenticated && u.HasClaim(c => c.Type == ClaimTypes.Name)).FindFirst(ClaimTypes.Name).Value</span>
 
         }
+        <button type="submit" asp-controller="AccountController" asp-action="logout">Logout</button> 
     </div>
     <div>
         @RenderBody()

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Lab29CustomPolicies.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lab29CustomPolicies.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,14 +21,14 @@ namespace Lab29CustomPolicies.Controllers
             _userManager = usermanager;
             _signInManager = signInManager;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm, string returnUrl = null)
         {
@@ -37,23 +39,28 @@ namespace Lab29CustomPolicies.Controllers
                 var result = await _userManager.CreateAsync(user, rvm.Password);
 
                 if (result.Succeeded)
-                { 
+                {
                     Claim dateOfBirth = new Claim(ClaimTypes.DateOfBirth, user.Birthday.Date.ToString(), ClaimValueTypes.Date);
 
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("Home", "Index");
+                    return RedirectToAction("Index", "Home");
+                    //return View();
+
 
                 }
             }
             return View();
         }
+        [AllowAnonymous]
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
+        [AllowAnonymous]
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
@@ -66,6 +73,7 @@ namespace Lab29CustomPolicies.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                return View();
 
             }
             return View();
@@ -122,6 +130,12 @@ namespace Lab29CustomPolicies.Controllers
         public IActionResult AccessDenied()
         {
             return View("Forbidden");
+        }
+        [Authorize]
+        public IActionResult Logout()
+        {
+            _signInManager.SignOutAsync();
+            return View();
         }
     }
 }

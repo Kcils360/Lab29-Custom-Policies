@@ -1,4 +1,8 @@
 ﻿@model Lab29CustomPolicies.Models.LoginViewModel
+
+@{
+    Layout = "_Layout";
+}
 <h1>Login Page</h1>
 
 <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
