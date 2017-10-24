@@ -21,16 +21,16 @@ namespace Lab29CustomPolicies.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register(/*string returnUrl = null*/)
+        public IActionResult Register(string returnUrl = null)
         {
-            //ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel rvm /*string returnUrl = null*/)
+        public async Task<IActionResult> Register(RegisterViewModel rvm, string returnUrl = null)
         {
-            //ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = rvm.UserName, Email = rvm.Email };
@@ -43,7 +43,7 @@ namespace Lab29CustomPolicies.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Home", "Index");
 
                 }
             }
