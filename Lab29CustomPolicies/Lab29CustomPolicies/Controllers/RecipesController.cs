@@ -9,7 +9,8 @@ using Lab29CustomPolicies.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Lab29CustomPolicies.Controllers
-{
+{   
+    [Authorize]
     public class RecipesController : Controller
     {
         
