@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Lab29CustomPolicies
 {
     public class Startup
-    {
+    {      
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
