@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab29CustomPolicies.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lab29CustomPolicies.Controllers
-{
+{   
+    [Authorize]
     public class RecipesController : Controller
     {
+        
         private readonly Lab29CustomPoliciesContext _context;
 
         public RecipesController(Lab29CustomPoliciesContext context)
@@ -53,7 +56,7 @@ namespace Lab29CustomPolicies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Dish,Category,Ingredients,Directions,IsPublished")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("ID,Dish,Category,Ingredients,Directions,ContainsAlcohol")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +88,7 @@ namespace Lab29CustomPolicies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Dish,Category,Ingredients,Directions,IsPublished")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Dish,Category,Ingredients,Directions,ContainsAlcohol")] Recipe recipe)
         {
             if (id != recipe.ID)
             {
@@ -134,6 +137,7 @@ namespace Lab29CustomPolicies.Controllers
         }
 
         // POST: Recipes/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
