@@ -14,12 +14,7 @@ namespace Lab29CustomPolicies.Data
         {
 
         }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
 
-        public DbSet<Lab29CustomPolicies.Models.ApplicationUser> ApplicationUser { get; set; }
 
     }
 }

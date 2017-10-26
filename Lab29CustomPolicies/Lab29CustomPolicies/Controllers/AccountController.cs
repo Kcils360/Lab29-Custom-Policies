@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Lab29CustomPolicies.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -16,9 +16,11 @@
         else
         {
             <span>Hello @User.Identities.First(u => u.IsAuthenticated && u.HasClaim(c => c.Type == ClaimTypes.Name)).FindFirst(ClaimTypes.Name).Value</span>
-
+            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+            </form>
         }
-        <button type="submit" asp-controller="AccountController" asp-action="logout">Logout</button> 
+        @*<button type="submit" asp-controller="AccountController" asp-action="logout">Logout</button>*@ 
     </div>
     <div>
         @RenderBody()

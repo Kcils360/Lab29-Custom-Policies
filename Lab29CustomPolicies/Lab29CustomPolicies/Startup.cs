@@ -56,6 +56,12 @@ namespace Lab29CustomPolicies
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
+
 
         }
 
@@ -73,7 +79,7 @@ namespace Lab29CustomPolicies
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Somehting went wrong.  So very, very wrong.");
+                await context.Response.WriteAsync("Something went wrong.  So very, very wrong.");
             });
         }
     }
